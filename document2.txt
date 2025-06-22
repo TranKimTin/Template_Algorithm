@@ -1,0 +1,311 @@
+#include <bits/stdc++.h>
+#define cerr cout
+using namespace std;
+void __print(int x) { cerr << x; }
+void __print(long x) { cerr << x; }
+void __print(long long x) { cerr << x; }
+void __print(unsigned x) { cerr << x; }
+void __print(unsigned long x) { cerr << x; }
+void __print(unsigned long long x) { cerr << x; }
+void __print(float x) { cerr << x; }
+void __print(double x) { cerr << x; }
+void __print(long double x) { cerr << x; }
+void __print(char x) { cerr << '\'' << x << '\''; }
+void __print(const char *x) { cerr << '\"' << x << '\"'; }
+void __print(const string &x) { cerr << '\"' << x << '\"'; }
+void __print(bool x) { cerr << (x ? "true" : "false"); }
+template <typename A>void __print(const A &x);
+template <typename A, typename B>void __print(const pair<A, B> &p);
+template <typename... A>void __print(const tuple<A...> &t);
+template <typename T>void __print(stack<T> s);
+template <typename T>void __print(queue<T> q);
+template <typename T, typename... U>void __print(priority_queue<T, U...> q);
+template <typename A>void __print(const A &x) {bool first = true;cerr << '{';for (const auto &i : x) {    cerr << (first ? "" : ","), __print(i);    first = false;}cerr << '}';}
+template <typename A, typename B>void __print(const pair<A, B> &p) {cerr << '(';__print(p.first);cerr << ',';__print(p.second);cerr << ')';}
+template <typename... A>void __print(const tuple<A...> &t) {bool first = true;cerr << '(';apply([&first](const auto &...args) { ((cerr << (first ? "" : ","), __print(args), first = false), ...); }, t);cerr << ')';}
+template <typename T>void __print(stack<T> s) {vector<T> debugVector;while (!s.empty()) {    T t = s.top();    debugVector.push_back(t);    s.pop();}reverse(debugVector.begin(), debugVector.end());__print(debugVector);}
+template <typename T>void __print(queue<T> q) {vector<T> debugVector;while (!q.empty()) {    T t = q.front();    debugVector.push_back(t);    q.pop();}__print(debugVector);}
+template <typename T, typename... U>void __print(priority_queue<T, U...> q) {vector<T> debugVector;while (!q.empty()) {    T t = q.top();    debugVector.push_back(t);    q.pop();}__print(debugVector);}void _print() { cerr << "]\n"; }
+template <typename Head, typename... Tail>void _print(const Head &H, const Tail &...T) {__print(H);if (sizeof...(T))    cerr << ", ";_print(T...);}
+#define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
+ 
+#include <bits/stdc++.h>
+using namespace std;
+#define int int64_t
+const int MOD = 1e9+7;
+#define pii pair<int, int>
+#define F first
+#define S second
+typedef vector<int> vi;
+ 
+//DSU
+class UnionFind { // OOP style
+    private: vi p, rank; // remember: vi is vector<int>
+    public:
+    UnionFind(int N) {
+        rank.assign(N, 0);
+        p.assign(N, 0);
+        for (int i = 0; i < N; i++)
+            p[i] = i;
+    }
+ 
+    int findSet(int i) {
+        return (p[i] == i) ? i : (p[i] = findSet(p[i]));
+    }
+ 
+    bool isSameSet(int i, int j) {
+        return findSet(i) == findSet(j);
+    }
+ 
+    void unionSet(int i, int j) {
+        int x = findSet(i);
+        int y = findSet(j);
+        if (x != y) { // if from different set
+            if (rank[x] > rank[y]) p[y] = x; // rank keeps the tree short
+            else {
+                p[x] = y;
+                if (rank[x] == rank[y]) rank[y]++;
+            }
+        }
+    }
+};
+ 
+//Segment Tree
+class SegmentTree {
+    private:
+        vi bit;
+    public:
+    SegmentTree(int N) {
+        bit.assign(N, 0);
+    }
+ 
+    void insert(int idx, int lo, int hi, int tar) {
+        if (lo == hi) {
+            bit[idx]++;
+            return;
+        }
+        int mid = (lo + hi)/2;
+        if (tar <= mid) {
+            insert(idx*2+1, lo, mid, tar);
+        } else {
+            insert(idx*2+2, mid+1, hi, tar);
+        }
+ 
+        bit[idx] = bit[idx*2+1] + bit[idx*2+2];
+    }
+ 
+    int query(int idx, int lo, int hi, int left, int right) {
+        if (lo == left and hi == right) {
+            return bit[idx];
+        }
+        int mid = (lo + hi)/2;
+        if (right <= mid) {
+            return query(idx*2+1, lo, mid, left, right);
+        } else if (left > mid) {
+            return query(idx*2+2, mid+1, hi, left, right);
+        } else {
+            return query(idx*2+1, lo, mid, left, mid) + query(idx*2+2, mid+1, hi, mid+1, right);
+        }
+    }
+};
+ 
+ 
+int findFrequency(vector<int>& arr, int left, int right) {
+    int a = lower_bound(arr.begin(), arr.end(), left) - arr.begin();
+ 
+    int b = upper_bound(arr.begin(), arr.end(), right) - arr.begin();
+ 
+    return b-a;
+}
+ 
+void sieveOfEratosthenes(int n) {
+    bool prime[n + 1];
+    memset(prime, true, sizeof(prime));
+ 
+    for (int p = 2; p * p <= n; p++) {
+        if (prime[p] == true) {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+ 
+    for (int p = 2; p <= n; p++)
+        if (prime[p])
+            cout << p << " ";
+}
+ 
+/****Max flow and min cut graph*****/
+struct Edge {
+    int v;
+    int flow;
+    int C;
+    int rev;
+};
+ 
+class NetFlow {
+    int n;
+    int* level;
+    vector<Edge>* adj;
+public:
+    NetFlow(int n)
+    {
+        adj = new vector<Edge>[n];
+        this->n = n;
+        level = new int[n];
+    }
+ 
+    void addEdge(int u, int v, int c)
+    {
+        // Forward edge : 0 flow and C capacity
+        Edge a{ v, 0, c, (int)adj[v].size() };
+        Edge b{ u, 0, 0, (int)adj[u].size() };
+ 
+        adj[u].push_back(a);
+        adj[v].push_back(b);
+    }
+ 
+    bool BFS(int s, int t) {
+        for (int i = 0; i < n; i++)
+            level[i] = -1;
+ 
+        level[s] = 0;
+ 
+        list<int> q;
+        q.push_back(s);
+ 
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop_front();
+            for (auto i = adj[u].begin(); i != adj[u].end(); i++) {
+                Edge& e = *i;
+                if (level[e.v] < 0 && e.flow < e.C) {
+                    level[e.v] = level[u] + 1;
+                    q.push_back(e.v);
+                }
+            }
+        }
+        return level[t] < 0 ? false : true;
+    }
+ 
+    int sendFlow(int u, int flow, int t, int start[]) {
+        if (u == t)
+            return flow;
+ 
+        for (; start[u] < adj[u].size(); start[u]++) {
+            Edge& e = adj[u][start[u]];
+ 
+            if (level[e.v] == level[u] + 1 && e.flow < e.C) {
+                int curr_flow = min(flow, e.C - e.flow);
+ 
+                int temp_flow = sendFlow(e.v, curr_flow, t, start);
+ 
+                if (temp_flow > 0) {
+                    e.flow += temp_flow;
+                    adj[e.v][e.rev].flow -= temp_flow;
+                    return temp_flow;
+                }
+            }
+        }
+ 
+        return 0;
+    }
+ 
+    int DinicMaxflow(int s, int t) {
+        if (s == t)
+            return -1;
+ 
+        int total = 0; // Initialize result
+ 
+        while (BFS(s, t) == true) {
+            int* start = new int[n + 1]{ 0 };
+ 
+            while (int flow = sendFlow(s, INT_MAX, t, start))
+                total += flow;
+        }
+ 
+        return total;
+    }
+};
+/********************************************************/
+ 
+//initializeDiv(n); tao cac uoc cua n so
+void initializeDiv(int n) {
+    vector<vector<int>> d(2001);
+    int cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        int j = 1;
+        for (j; j*j < i; j++) {
+            if (i % j == 0) {
+                d[i].push_back(j);
+                d[i].push_back(i/j);
+            }
+        }
+        if (j*j == i) d[i].push_back(j);
+    }
+}
+ 
+/******************Cac phep mod so to****************/
+/*****Giai thua, giai thua dao, nCr*****/
+// (x^y) % modu
+int power_MOD(int x, int y, int modu) {
+    int res = 1;
+    x = x % modu; 
+    if (x == 0) return 0;
+    while (y > 0) {
+        if (y & 1) res = (res*x) % modu;
+        y = y>>1;
+        x = (x*x) % modu;
+    }
+    return res;
+}
+ 
+// (a/x) % modu
+int div_MOD(int a, int x, int modu) {
+    int y = modu - 2;
+    int res = 1;
+    x = x % modu; 
+    if (x == 0) return 0;
+    while (y > 0) {
+        if (y & 1) res = (res*x) % modu;
+        y = y>>1;
+        x = (x*x) % modu;
+    }
+    return ((a%modu)*res)%modu;
+}
+ 
+int fact[1114514];
+int invfact[1114514];
+ 
+int inversemod(int p, int q) {
+    return (p > 1 ? q - 1LL * inversemod(q % p, p) * q / p : 1);
+}
+ 
+int binom(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    return fact[n] * (1LL * invfact[k] * invfact[n - k] % MOD) % MOD;
+}
+ 
+void init_bi(int N) {
+    fact[0] = 1;
+    for (int i = 1; i < N; i++) {
+        fact[i] = 1LL * i * fact[i - 1] % MOD;
+    }
+    invfact[N - 1] = inversemod(fact[N - 1], MOD);
+    for (int i = N - 1; i >= 1; i--) {
+        invfact[i - 1] = 1LL * i * invfact[i] % MOD;
+    }
+}
+/****************************************************/
+ 
+ 
+//Math
+int64_t gcd(int64_t a, int64_t b) {
+    if(b==0)
+        return a;
+    else
+        return gcd(b,a%b);
+}
+ 
+int64_t lcm(int64_t a,int64_t b) {
+    return (int64_t)((int64_t) a/gcd(a,b)) * b;
+}

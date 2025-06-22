@@ -1,0 +1,195 @@
+template:
+https://github.com/atcoder/ac-library/tree/master/atcoder
+
+
+Remainder Operation
+When calculating combinations, the result becomes very large. Therefore, it is necessary to apply the remainder operation continuously during the calculation.
+
+At this time, you can use the associative law of remainder operations. Because division is also required when calculating combinations, it is more complex.
+
+The associative laws hold for addition, multiplication, and subtraction. But it doesn't work for division.
+
+(A + B) % p = ((A % p) + (B % p)) % p
+(A * B) % p = ((A % p) * (B % p)) % p
+(A - B) % p = ((A % p) - (B % p) + p) % p
+Instead, it is known that if p is prime, the following equation holds.
+
+Fortunately, the given number in the problem 109 + 7  is prime, so this equation can be applied.
+
+(A / B) % p = (A * B^(p-2)) % p = ((A % p) * (B^(p-2) % p)) % p
+
+
+
+tính giai thừa, số mũ, tổ hợp: http://collab.lge.com/main/pages/viewpage.action?pageId=1950193217
+
+
+ll fact[MAX], inv[MAX];
+// giai thua, 1 chia giai thua
+
+ll pw(ll x, ll e) //(x^e) % MOD
+{
+	if (e == 0)
+		return 1;
+	if (e == 1)
+		return x;
+	ll y = pw(x, e / 2);
+	y = (y * y) % MOD;
+	if (e % 2 == 0)
+		return y;
+	return (y * x) % MOD;
+}
+
+ll inv(ll b, ll mod) {
+    return powmod(b, mod - 2, mod);
+}
+
+ll C(ll n, ll k) // to hop k cua n
+{
+	if (k > n)
+		return 0;
+
+	ll v1 = fact[n];
+	ll v2 = inv[k];
+	ll v3 = inv[n - k];
+	return (((v1 * v2) % MOD) * v3) % MOD;
+}
+
+//to hop khi n lon, k nho
+ll C(ll n, ll k) // to hop k cua n
+{
+	if (k > n)
+		return 0;
+
+	// ll v1 = fact[n];
+	ll v2 = inv[k];
+	// ll v3 = inv[n - k];
+	ll v13 = 1;
+	for (int i = n - k + 1; i <= n; i++)
+	{
+		v13 *= i;
+		v13 %= MOD;
+	}
+
+	// return (((v1 * v2) % MOD) * v3) % MOD;
+	return (v13 * v2) % MOD;
+}
+
+void init()
+{
+	fact[0] = 1;
+	for (int i = 1; i < MAX; i++)
+	{
+		fact[i] = fact[i - 1] * i;
+		fact[i] %= MOD;
+	}
+
+	// 1/k!
+	inv[0] = 1;
+	for (int i = 1; i < MAX; i++)
+	{
+		ll unit = pw(i, MOD - 2);
+		inv[i] = inv[i - 1] * unit;
+		inv[i] %= MOD;
+	}
+}
+
+//Trường hợp MOD là số nguyên tố
+x^-1 = x^(MOD-2)
+(a/b)%MOD = a*(b^(MOD-2)) % MOD
+
+//trường hợp MOD khác số nguyên tố, xem https://cses.fi/book/book.pdf trang 213
+
+
+https://leetcode.com/problems/largest-rectangle-in-histogram/
+hình chữ nhật lớn nhất
+int largestRectangleArea(vector<int>& heights) {
+	int max_area = 0;
+	stack<int> indexStack;
+	int n = heights.size();
+
+	for (int i = 0; i <= n; i++) {
+		while (!indexStack.empty() &&
+				(i == n || heights[indexStack.top()] > heights[i])) {
+			int h = heights[indexStack.top()];
+			indexStack.pop();
+			int width = indexStack.empty() ? i : i - indexStack.top() - 1;
+			max_area = max(max_area, h * width);
+		}
+		indexStack.push(i);
+	}
+
+	return max_area;
+}
+
+
+
+//hàm lấy random
+unsigned int seed = 123456789;
+
+// Hàm tạo số ngẫu nhiên dựa trên thuật toán Linear Congruential Generator (LCG)
+unsigned int randomNumber() {
+    seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+    return seed;
+}
+
+// Hàm lấy số ngẫu nhiên trong khoảng từ a đến b (giới hạn int)
+int randomInRange(int a, int b) {
+    return a + randomNumber() % (b - a + 1);
+}
+
+//hoán vị tiếp theo 
+https://cplusplus.com/reference/algorithm/next_permutation/
+
+
+
+
+lower_bound: Tìm phần tử đầu tiên không nhỏ hơn giá trị cần tìm. (>=)
+upper_bound: Tìm phần tử đầu tiên lớn hơn giá trị cần tìm. (>)
+
+
+vector<int> toVectorDigits(long long n) {
+    vector<int> res;
+    while (n > 0) {
+        res.push_back(n % 10);
+        n /= 10;
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+
+void rotateClockwise(int a[][100], int n) {
+    // Bước 1: Chuyển vị (transpose) ma trận
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; ++j)
+            swap(a[i][j], a[j][i]);
+
+    // Bước 2: Lật từng hàng theo chiều ngang (reverse hàng)
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n / 2; ++j)
+            swap(a[i][j], a[i][n - 1 - j]);
+}
+
+void rotateCounterClockwise(int a[][100], int n) {
+    // Bước 1: Chuyển vị (transpose)
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; ++j)
+            swap(a[i][j], a[j][i]);
+
+    // Bước 2: Lật từng cột theo chiều dọc
+    for (int j = 0; j < n; ++j)
+        for (int i = 0; i < n / 2; ++i)
+            swap(a[i][j], a[n - 1 - i][j]);
+}
+
+
+ll min: LLONG_MIN
+
+cin nhanh
+freopen("input.txt", "r", stdin);
+ios_base::sync_with_stdio(0);
+cin.tie(0);
+cout.tie(0);
+
+
+heap mặc định top = max
