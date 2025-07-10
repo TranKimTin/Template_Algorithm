@@ -186,7 +186,9 @@ void rotateCounterClockwise(int a[][100], int n) {
 ll min: LLONG_MIN
 
 cin nhanh
-freopen("input.txt", "r", stdin);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+#endif
 ios_base::sync_with_stdio(0);
 cin.tie(0);
 cout.tie(0);
