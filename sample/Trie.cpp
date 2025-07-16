@@ -1,96 +1,85 @@
 #include <iostream>
-#include <array>
+#include <vector>
 #include <string>
+
 using namespace std;
 
 const int ALPHABET_SIZE = 26;
-const int MAX_NODES = 1000000; // Sửa tùy theo bài toán
 
 struct TrieNode
 {
-    bool isEnd = false;
-    array<TrieNode *, ALPHABET_SIZE> children{};
+    TrieNode *children[ALPHABET_SIZE];
+    bool isEndOfWord;
 
-    void reset()
+    void init()
     {
-        isEnd = false;
-        children.fill(nullptr);
+        for (int i = 0; i < ALPHABET_SIZE; ++i)
+            children[i] = nullptr;
+        isEndOfWord = false;
     }
 };
-
 class Trie
 {
-private:
-    TrieNode pool[MAX_NODES];
+    // Memory pool
+    vector<TrieNode> pool;
     int poolIndex = 0;
-    TrieNode *root;
 
     TrieNode *newNode()
     {
-        TrieNode *node = &pool[poolIndex++];
-        node->reset();
-        return node;
+        if (poolIndex >= pool.size())
+        {
+            cerr << "Pool exhausted!" << endl;
+            exit(1);
+        }
+        pool[poolIndex].init();
+        return &pool[poolIndex++];
     }
+
+    TrieNode *root;
 
 public:
-    Trie()
+    Trie(int maxNodes = 100000)
     {
-        root = newNode();
-    }
-
-    void insert(const string &word)
-    {
-        TrieNode *node = root;
-        for (char c : word)
-        {
-            int idx = c - 'a';
-            if (!node->children[idx])
-                node->children[idx] = newNode();
-            node = node->children[idx];
-        }
-        node->isEnd = true;
-    }
-
-    bool search(const string &word) const
-    {
-        TrieNode *node = root;
-        for (char c : word)
-        {
-            int idx = c - 'a';
-            if (!node->children[idx])
-                return false;
-            node = node->children[idx];
-        }
-        return node->isEnd;
-    }
-
-    bool startsWith(const string &prefix) const
-    {
-        TrieNode *node = root;
-        for (char c : prefix)
-        {
-            int idx = c - 'a';
-            if (!node->children[idx])
-                return false;
-            node = node->children[idx];
-        }
-        return true;
-    }
-
-    void clear()
-    {
+        pool.resize(maxNodes); // cấp trước bộ nhớ cho tất cả nodes
         poolIndex = 0;
-        root = newNode();
+        root = newNode(); // node gốc
+    }
+
+    void insert(const string &key)
+    {
+        TrieNode *node = root;
+        for (char c : key)
+        {
+            int index = c - 'a';
+            if (!node->children[index])
+                node->children[index] = newNode();
+            node = node->children[index];
+        }
+        node->isEndOfWord = true;
+    }
+
+    bool search(const string &key)
+    {
+        TrieNode *node = root;
+        for (char c : key)
+        {
+            int index = c - 'a';
+            if (!node->children[index])
+                return false;
+            node = node->children[index];
+        }
+        return node->isEndOfWord;
     }
 };
 
-Trie trie;
 int main()
 {
-    trie.insert("apple");
-    cout << trie.search("apple") << endl;   // true
-    cout << trie.search("app") << endl;     // false
-    cout << trie.startsWith("app") << endl; // true
-    trie.insert("app");
-    cout << trie.search("app") << endl; // true
+    Trie trie;
+
+    trie.insert("hello");
+    trie.insert("world");
+
+    cout << trie.search("hello") << "\n"; // 1
+    cout << trie.search("world") << "\n"; // 1
+    cout << trie.search("hell") << "\n";  // 0
 }
