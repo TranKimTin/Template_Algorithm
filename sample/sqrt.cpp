@@ -60,6 +60,7 @@ int main()
     sort(queries.begin(), queries.end());
 
     int l = 1, r = 0;
+    //  int l = 0, r = -1; nếu đếm từ 0
     for (auto query : queries)
     {
         while (r < query.r)
