@@ -45,7 +45,7 @@ int main()
     cin.tie(nullptr);
 
     cin >> n;
-    block_size = sqrt(n);
+    block_size = max((int)sqrt(n), 1);
     for (int i = 1; i <= n; i++)
         cin >> a[i];
 
@@ -77,7 +77,7 @@ int main()
 
     for (int i = 0; i < q; i++)
     {
-        cout << answer[i] << '\n';
+        cout << answer[i] << "\n";
     }
 
     return 0;
