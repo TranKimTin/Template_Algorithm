@@ -82,6 +82,31 @@ private:
         }
     }
 
+    void add(int id, int start, int end, int idx, int value)
+    {
+        if (start == end)
+        {
+            tree[id].maxVal += value;
+            tree[id].minVal += value;
+            tree[id].sum += value;
+        }
+        else
+        {
+            int mid = (start + end) / 2;
+            if (start <= idx && idx <= mid)
+            {
+                add(2 * id + 1, start, mid, idx, value);
+            }
+            else
+            {
+                add(2 * id + 2, mid + 1, end, idx, value);
+            }
+            tree[id].maxVal = max(tree[2 * id + 1].maxVal, tree[2 * id + 2].maxVal);
+            tree[id].minVal = min(tree[2 * id + 1].minVal, tree[2 * id + 2].minVal);
+            tree[id].sum = tree[2 * id + 1].sum + tree[2 * id + 2].sum;
+        }
+    }
+
 public:
     SegmentTree(const vector<ll> &data)
     {
@@ -98,6 +123,11 @@ public:
     void update(int idx, int value)
     {
         update(0, 0, n - 1, idx, value);
+    }
+
+    void add(int idx, int value)
+    {
+        add(0, 0, n - 1, idx, value);
     }
 };
 
