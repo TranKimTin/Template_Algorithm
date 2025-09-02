@@ -22,9 +22,9 @@ vector<int> toVectorDigits(long long n)
 }
 ll cnt[20][2], sum[20][2];
 
-ll f(vector<int> &digits, int pos, int tight, bool lead)
+ll f(vector<int> &v, int pos, int tight)
 {
-    if (pos == digits.size())
+    if (pos == v.size())
         return 0;
     ll &res = sum[pos][tight];
     if (res != -1)
@@ -34,14 +34,14 @@ ll f(vector<int> &digits, int pos, int tight, bool lead)
     ll &c = cnt[pos][tight];
     c = 0;
 
-    int maxD = tight ? digits[pos] : 9;
+    int maxD = tight ? v[pos] : 9;
     for (int d = 0; d <= maxD; d++)
     {
         int nt = tight && (d == maxD);
-        ll subSum = f(digits, pos + 1, nt, lead && d == 0);
+        ll subSum = f(v, pos + 1, nt);
         ll subCnt = cnt[pos + 1][nt];
 
-        if (pos == digits.size() - 1)
+        if (pos == v.size() - 1)
         {
             subCnt = 1;
             subSum = 0;
@@ -70,10 +70,10 @@ ll sumLR(ll l, ll r)
     auto L = toVectorDigits(l - 1);
 
     init();
-    ll fr = f(R, 0, 1, true);
+    ll fr = f(R, 0, 1);
 
     init();
-    ll fl = f(L, 0, 1, true);
+    ll fl = f(L, 0, 1);
 
     return fr - fl;
 }
