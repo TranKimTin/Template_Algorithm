@@ -236,7 +236,7 @@ private:
     {
         if (!root)
             return root;
-        int sizeLeft = root->left ? root->left->size : 0;
+        int sizeLeft = size(root->left);
 
         if (k <= sizeLeft)
         {
