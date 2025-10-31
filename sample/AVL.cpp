@@ -11,7 +11,7 @@ struct AVLNode
     int value;
     int height;
     int count; // số lượng node có cùng value
-    int size;  // tổng số lượng node trong cây con
+    int size;  // tổng số lượng node trong cây con, tính cả count
     int min;
     int max;
     long long sum;
@@ -232,6 +232,26 @@ private:
         printInOrder(node->right);
     }
 
+    AVLNode *get(AVLNode *root, int k)
+    {
+        if (!root)
+            return root;
+        int sizeLeft = root->left ? root->left->size : 0;
+
+        if (k <= sizeLeft)
+        {
+            return get(root->left, k);
+        }
+        else if (k <= sizeLeft + root->count)
+        {
+            return root;
+        }
+        else
+        {
+            return get(root->right, k - sizeLeft - root->count);
+        }
+    }
+
 public:
     AVLTree() : root(NULL) {}
 
@@ -243,6 +263,11 @@ public:
     void erase(int value)
     {
         root = erase(root, value);
+    }
+
+    int get(int k) // lấy thằng thứ k
+    {
+        return get(root, k)->value;
     }
 
     void print()
@@ -257,15 +282,19 @@ int main()
     freopen("input.txt", "r", stdin);
     AVLTree tree;
 
-    int n;
-    cin >> n;
+    int n = 10;
+    int a[10] = {6, 1, 1, 7, 2, 3, 5, 3, 9, 10};
+
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        tree.insert(x);
+        tree.insert(a[i]);
     }
     tree.print();
+
+    for (int i = 1; i <= n; i++)
+    {
+        cout << tree.get(i) << " ";
+    }
 
     return 0;
 }
