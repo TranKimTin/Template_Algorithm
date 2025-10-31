@@ -171,7 +171,7 @@ private:
                 if (!node->left || !node->right)
                 {
                     AVLNode *temp = node->left ? node->left : node->right;
-                    delete node;
+                    // delete node;
                     return temp;
                 }
                 else
