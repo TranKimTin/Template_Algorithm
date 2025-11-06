@@ -6,35 +6,30 @@
 #include <queue>
 #include <limits>
 #include <stack>
+#define pii pair<int, int>
+#define MAX 999
+#define INF ((int)1e9)
 
 using namespace std;
-
-struct Edge
-{
-    int to;
-    int weight;
-};
-
 struct Node
 {
-    int vertex;
-    int distance;
+    int u;
+    int d;
 
     bool operator<(const Node &a) const
     {
-        return distance > a.distance;
+        return d > a.d;
     }
 };
 
-void printPath(vector<int> &parent, int vertex)
+void printPath(int parent[MAX], int u)
 {
     stack<int> path;
-    int crawl = vertex;
-    path.push(crawl);
-    while (parent[crawl] != -1)
+    path.push(u);
+    while (parent[u] != -1)
     {
-        path.push(parent[crawl]);
-        crawl = parent[crawl];
+        path.push(parent[u]);
+        u = parent[u];
     }
     while (!path.empty())
     {
@@ -44,43 +39,46 @@ void printPath(vector<int> &parent, int vertex)
     cout << endl;
 }
 
-void dijkstra(const vector<vector<Edge>> &graph, int src)
+int n;
+vector<pii> a[MAX];
+int d[MAX];
+bool visited[MAX];
+int parent[MAX];
+
+void dijkstra(int src)
 {
-    int n = graph.size();
-    vector<int> dist(n, numeric_limits<int>::max());
-    vector<bool> visited(n, false);
-    vector<int> parent(n, -1);
+    fill(d, d + n, INF);
+    fill(visited, visited + n, false);
+    fill(parent, parent + n, -1);
 
     priority_queue<Node> pq;
     pq.push({src, 0});
-    dist[src] = 0;
+    d[src] = 0;
 
     while (!pq.empty())
     {
         Node current = pq.top();
         pq.pop();
-        int u = current.vertex;
+        int u = current.u;
 
         if (visited[u])
             continue;
         visited[u] = true;
 
-        for (auto &edge : graph[u])
+        for (auto [v, w] : a[u])
         {
-            int v = edge.to;
-            int weight = edge.weight;
-            if (!visited[v] && dist[u] + weight < dist[v])
+            if (!visited[v] && d[u] + w < d[v])
             {
-                dist[v] = dist[u] + weight;
+                d[v] = d[u] + w;
                 parent[v] = u;
-                pq.push({v, dist[v]});
+                pq.push({v, d[v]});
             }
         }
     }
 
     for (int i = 0; i < n; ++i)
     {
-        cout << "Khoang cach tu dinh " << src << " den dinh " << i << " la: " << dist[i];
+        cout << "Khoang cach tu dinh " << src << " den dinh " << i << " la: " << d[i];
         cout << " va duong di la: ";
         printPath(parent, i);
     }
@@ -88,23 +86,21 @@ void dijkstra(const vector<vector<Edge>> &graph, int src)
 
 int main()
 {
-    int V = 5;
 
-    // Danh sách kề
-    vector<vector<Edge>> graph(V);
+    n = 5;
 
     // Thêm cạnh vào đồ thị
-    graph[0].push_back({1, 10});
-    graph[0].push_back({3, 5});
-    graph[1].push_back({2, 1});
-    graph[1].push_back({3, 2});
-    graph[2].push_back({4, 4});
-    graph[3].push_back({2, 9});
-    graph[3].push_back({4, 2});
-    graph[4].push_back({0, 7});
-    graph[4].push_back({2, 6});
+    a[0].push_back({1, 10});
+    a[0].push_back({3, 5});
+    a[1].push_back({2, 1});
+    a[1].push_back({3, 2});
+    a[2].push_back({4, 4});
+    a[3].push_back({2, 9});
+    a[3].push_back({4, 2});
+    a[4].push_back({0, 7});
+    a[4].push_back({2, 6});
 
-    dijkstra(graph, 0);
+    dijkstra(0);
 
     return 0;
 }
