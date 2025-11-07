@@ -195,3 +195,21 @@ cout.tie(0);
 
 
 heap mặc định top = max
+
+intersect đoạn trong hình tròn
+// bool intersect(pii a, pii b)
+// {
+//     int offset = a.first - 1;
+//     a.first -= offset;
+//     a.second -= offset;
+//     b.first -= offset;
+//     b.second -= offset;
+
+//     return a.second > b.first && a.second < b.second;
+// }
+
+bool intersect(pii a, pii b)
+{
+    return (a.first < b.first && b.first < a.second && a.second < b.second) ||
+           (b.first < a.first && a.first < b.second && b.second < a.second);
+}
