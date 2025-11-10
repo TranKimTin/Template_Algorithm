@@ -155,6 +155,13 @@ private:
         return node;
     }
 
+    AVLNode *findMax(AVLNode *node)
+    {
+        while (node->right)
+            node = node->right;
+        return node;
+    }
+
     AVLNode *erase(AVLNode *node, int value)
     {
         if (!node)
@@ -268,6 +275,16 @@ public:
     int get(int k) // lấy thằng thứ k
     {
         return get(root, k)->value;
+    }
+
+    int getMin()
+    {
+        return findMin(root)->value;
+    }
+
+    int getMax()
+    {
+        return findMax(root)->value;
     }
 
     void print()
