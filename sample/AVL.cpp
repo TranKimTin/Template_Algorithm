@@ -235,11 +235,11 @@ private:
             return;
         printInOrder(node->left);
         for (int i = 0; i < node->count; i++)
-            cout << node->value << "\n";
+            cout << node->value << " ";
         printInOrder(node->right);
     }
 
-    AVLNode *get(AVLNode *root, int k)
+    AVLNode *getByIndex(AVLNode *root, int k)
     {
         if (!root)
             return root;
@@ -247,7 +247,7 @@ private:
 
         if (k <= sizeLeft)
         {
-            return get(root->left, k);
+            return getByIndex(root->left, k);
         }
         else if (k <= sizeLeft + root->count)
         {
@@ -255,7 +255,42 @@ private:
         }
         else
         {
-            return get(root->right, k - sizeLeft - root->count);
+            return getByIndex(root->right, k - sizeLeft - root->count);
+        }
+    }
+
+    AVLNode *lowerBound(AVLNode *root, int value)
+    {
+        if (!root)
+            return root;
+        if (value == root->value)
+            return root;
+        if (value < root->value)
+        {
+            AVLNode *leftLB = lowerBound(root->left, value);
+            return leftLB ? leftLB : root;
+        }
+        else
+        {
+            return lowerBound(root->right, value);
+        }
+    }
+
+    int indexOf(AVLNode *root, int value)
+    {
+        if (!root)
+            return 0;
+        if (value == root->value)
+        {
+            return size(root->left) + 1;
+        }
+        else if (value < root->value)
+        {
+            return indexOf(root->left, value);
+        }
+        else
+        {
+            return size(root->left) + root->count + indexOf(root->right, value);
         }
     }
 
@@ -272,9 +307,14 @@ public:
         root = erase(root, value);
     }
 
-    int get(int k) // lấy thằng thứ k
+    int getByIndex(int k)
     {
-        return get(root, k)->value;
+        return getByIndex(root, k)->value;
+    }
+
+    int indexOf(int value) // đếm từ 1
+    {
+        return indexOf(root, value);
     }
 
     int getMin()
@@ -287,9 +327,15 @@ public:
         return findMax(root)->value;
     }
 
+    AVLNode *lowerBound(int value)
+    {
+        return lowerBound(root, value);
+    }
+
     void print()
     {
         printInOrder(root);
+        cout << endl;
     }
 };
 
@@ -310,8 +356,18 @@ int main()
 
     for (int i = 1; i <= n; i++)
     {
-        cout << tree.get(i) << " ";
+        cout << tree.getByIndex(i) << " ";
     }
 
+    cout << endl;
+    for (int i = 1; i <= 10; i++)
+    {
+        cout << "Lower bound of " << i << " is " << tree.lowerBound(i)->value << "\n";
+    }
+
+    for (int i = 1; i <= 10; i++)
+    {
+        cout << "Index of " << i << " is " << tree.indexOf(i) << "\n";
+    }
     return 0;
 }
