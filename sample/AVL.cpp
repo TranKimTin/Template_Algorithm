@@ -276,6 +276,18 @@ private:
         }
     }
 
+    AVLNode *lessOrEqual(AVLNode *root, int value)
+    {
+        if (!root)
+            return nullptr;
+        if (value == root->value)
+            return root;
+        if (value < root->value)
+            return lessOrEqual(root->left, value);
+        AVLNode *right = lessOrEqual(root->right, value);
+        return right ? right : root;
+    }
+
     int indexOf(AVLNode *root, int value)
     {
         if (!root)
@@ -330,6 +342,11 @@ public:
     AVLNode *lowerBound(int value)
     {
         return lowerBound(root, value);
+    }
+
+    AVLNode *lessOrEqual(int value)
+    {
+        return lessOrEqual(root, value);
     }
 
     void print()

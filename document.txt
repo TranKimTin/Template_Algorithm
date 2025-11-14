@@ -121,7 +121,8 @@ cin.tie(0);
 cout.tie(0);
 
 
-heap mặc định top = max
+priority_queue<int> maxHeap;
+priority_queue<int, vector<int>, greater<int>> minHeap;
 
 intersect đoạn trong hình tròn
 // bool intersect(pii a, pii b)
