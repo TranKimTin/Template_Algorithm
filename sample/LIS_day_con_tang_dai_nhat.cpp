@@ -2,18 +2,23 @@
 #define MAX 1000
 using namespace std;
 
+int n = 6;
+int a[MAX] = {6, 7, 7, 10, 8, 20};
+
+int pos[MAX];          // pos[i] = độ dài LIS khi thêm a[i]
+int trace[MAX];        // trace[i] = chỉ số phần tử trước đó trong LIS
+vector<int> lis;       // chứa các giá trị nhỏ nhất kết thúc LIS độ dài k
+vector<int> lastIndex; // lastIndex[k] = chỉ số phần tử cuối của LIS dài k+1
+
+// độ dài dãy con tăng dài nhất = lis.size()
+// pos, trace, lastIndex để truy ngược dãy
+
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vector<int> a = {6, 7, 7, 10, 8, 20};
-    int n = a.size();
-
-    vector<int> lis;          // chứa các giá trị nhỏ nhất kết thúc LIS độ dài k
-    vector<int> pos(n);       // pos[i] = độ dài LIS khi thêm a[i]
-    vector<int> trace(n, -1); // trace[i] = chỉ số phần tử trước đó trong LIS
-    vector<int> lastIndex;    // lastIndex[k] = chỉ số phần tử cuối của LIS dài k+1
+    fill(trace, trace + n, -1);
 
     for (int i = 0; i < n; i++)
     {
