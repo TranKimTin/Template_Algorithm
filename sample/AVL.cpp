@@ -2,10 +2,10 @@
 #include <algorithm>
 
 #define INF 999999999
-#define MAX_NODE 1000005
 
 using namespace std;
 
+#define MAX_NODE 1000005
 struct AVLNode
 {
     int value;

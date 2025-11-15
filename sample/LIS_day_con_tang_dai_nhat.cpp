@@ -13,6 +13,8 @@ vector<int> lastIndex; // lastIndex[k] = chỉ số phần tử cuối của LIS
 // độ dài dãy con tăng dài nhất = lis.size()
 // pos, trace, lastIndex để truy ngược dãy
 
+// https://www.acmicpc.net/problem/23248
+// định lý Dilworth cho poset 2D: số chuỗi tăng tối thiểu bằng độ dài dãy giảm dài nhất sau khi sắp xếp 1 chiều
 int main()
 {
     ios::sync_with_stdio(false);
@@ -22,19 +24,22 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        auto it = upper_bound(lis.begin(), lis.end(), a[i]); // dãy không giảm
-        // auto it = lower_bound(lis.begin(), lis.end(), a[i]); // dãy tăng
+        int x = a[i]; // dãy tăng
+        // int x = -a[i]; // dãy giảm
+
+        auto it = upper_bound(lis.begin(), lis.end(), x); // dãy không giảm
+        // auto it = lower_bound(lis.begin(), lis.end(), x); // dãy tăng
         int k = it - lis.begin();
 
         // cập nhật lis và vị trí cuối
         if (it == lis.end())
         {
-            lis.push_back(a[i]);
+            lis.push_back(x);
             lastIndex.push_back(i);
         }
         else
         {
-            *it = a[i];
+            *it = x;
             lastIndex[k] = i;
         }
 
