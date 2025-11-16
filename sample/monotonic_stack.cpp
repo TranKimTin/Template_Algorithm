@@ -4,27 +4,30 @@
 #include <climits>
 using namespace std;
 
+#define MAX 1000
+
 // Biến toàn cục – Trả về giá trị
-vector<int> next_greater_right, next_smaller_right;
-vector<int> next_greater_equal_right, next_smaller_equal_right;
+int next_greater_right[MAX];
+int next_smaller_right[MAX];
+int next_greater_equal_right[MAX];
+int next_smaller_equal_right[MAX];
 
-vector<int> next_greater_left, next_smaller_left;
-vector<int> next_greater_equal_left, next_smaller_equal_left;
+int next_greater_left[MAX];
+int next_smaller_left[MAX];
+int next_greater_equal_left[MAX];
+int next_smaller_equal_left[MAX];
 
-void monotonic(const vector<int> &a)
+void monotonic(int a[MAX], int n)
 {
-    int n = a.size();
+    fill(next_greater_right, next_greater_right + n, -1);
+    fill(next_smaller_right, next_smaller_right + n, -1);
+    fill(next_greater_equal_right, next_greater_equal_right + n, -1);
+    fill(next_smaller_equal_right, next_smaller_equal_right + n, -1);
 
-    // Khởi tạo
-    next_greater_right.assign(n, -1);
-    next_smaller_right.assign(n, -1);
-    next_greater_equal_right.assign(n, -1);
-    next_smaller_equal_right.assign(n, -1);
-
-    next_greater_left.assign(n, -1);
-    next_smaller_left.assign(n, -1);
-    next_greater_equal_left.assign(n, -1);
-    next_smaller_equal_left.assign(n, -1);
+    fill(next_greater_left, next_greater_left + n, -1);
+    fill(next_smaller_left, next_smaller_left + n, -1);
+    fill(next_greater_equal_left, next_greater_equal_left + n, -1);
+    fill(next_smaller_equal_left, next_smaller_equal_left + n, -1);
 
     stack<int> st;
 
@@ -124,17 +127,21 @@ void monotonic(const vector<int> &a)
         st.push(i);
     }
 }
-
+int n = 6;
+int a[MAX] = {3, 7, 1, 7, 8, 4};
 int main()
 {
-    vector<int> a = {3, 7, 1, 7, 8, 4};
-    monotonic(a);
+    monotonic(a, n);
 
-    auto print = [](const string &label, const vector<int> &v)
+    for (int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+
+    auto print = [](const string &label, int v[MAX])
     {
         cout << label << ": ";
-        for (int x : v)
-            cout << x << " ";
+        for (int i = 0; i < n; i++)
+            cout << v[i] << " ";
         cout << "\n";
     };
 
