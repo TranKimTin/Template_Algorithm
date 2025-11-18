@@ -140,5 +140,11 @@ int main()
         cout << "\n";
     }
 
+    cout << "\nMoi nut thuoc condensed nao (node -> scc_id):\n";
+    for (int u = 1; u <= n; ++u)
+    {
+        cout << "Node " << u << " thuoc SCC " << node_to_scc[u] << "\n";
+    }
+
     return 0;
 }
