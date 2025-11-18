@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <stack>
-#include <set>
+#include <bits/stdc++.h>
 #define MAX 10005
 using namespace std;
 
@@ -80,6 +76,33 @@ vector<vector<int>> build_condensed_graph(
     return condensed_graph;
 }
 
+vector<int> topo;
+vector<bool> visited_dfs;
+void dfs_topo_condensed(int u, const vector<vector<int>> &g)
+{
+    visited_dfs[u] = true;
+
+    for (int v : g[u])
+        if (!visited_dfs[v])
+            dfs_topo_condensed(v, g);
+
+    topo.push_back(u); // đẩy vào khi kết thúc node
+}
+
+vector<int> topo_sort_condensed(const vector<vector<int>> &g)
+{
+    int m = g.size(); // số SCC
+    visited_dfs.assign(m, false);
+    topo.clear();
+
+    for (int u = 0; u < m; ++u)
+        if (!visited_dfs[u])
+            dfs_topo_condensed(u, g);
+
+    reverse(topo.begin(), topo.end());
+    return topo;
+}
+
 int main()
 {
     n = 8;
@@ -136,15 +159,22 @@ int main()
     {
         cout << "SCC " << i << " -> ";
         for (int v : condensed[i])
-            cout << "SCC " << v << " ";
+            cout << "SCC" << v << " ";
         cout << "\n";
     }
 
     cout << "\nMoi nut thuoc condensed nao (node -> scc_id):\n";
     for (int u = 1; u <= n; ++u)
     {
-        cout << "Node " << u << " thuoc SCC " << node_to_scc[u] << "\n";
+        cout << "Node " << u << " thuoc SCC" << node_to_scc[u] << "\n";
     }
+
+    vector<int> topo = topo_sort_condensed(condensed);
+
+    cout << "\nThu tu topo cua do thi condensed:\n";
+    for (int x : topo)
+        cout << "SCC" << x << " ";
+    cout << "\n";
 
     return 0;
 }
