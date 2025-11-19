@@ -150,3 +150,5 @@ bool intersect(pii a, pii b)
     return (a.first < b.first && b.first < a.second && a.second < b.second) ||
            (b.first < a.first && a.first < b.second && b.second < a.second);
 }
+
+cout << fixed << setprecision(3) << x << endl; 
