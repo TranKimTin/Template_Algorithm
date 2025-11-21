@@ -3,6 +3,7 @@
 using namespace std;
 
 // Hàm tính Z-function cho mảng số nguyên
+// Z[i] = độ dài đoạn dài nhất bắt đầu tại i mà khớp với prefix của chuỗi.
 vector<int> z_function(const vector<int> &a)
 {
     int n = a.size();

@@ -5,6 +5,7 @@ using namespace std;
 // Tính mảng LPS (Longest Prefix Suffix) cho pattern
 // pi[i] định nghĩa: độ dài tiền tố dài nhất = hậu tố của s[0..i].
 // tính cả overlap
+// pi[i] = độ dài đoạn prefix dài nhất = suffix kết thúc tại i.
 vector<int> computeLPS(const vector<int> &pattern)
 {
     int m = pattern.size();

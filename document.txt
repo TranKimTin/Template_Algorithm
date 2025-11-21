@@ -152,3 +152,4 @@ bool intersect(pii a, pii b)
 }
 
 cout << fixed << setprecision(3) << x << endl; 
+cout << setw(9) << setfill('0') << dp[2] << "\n";
