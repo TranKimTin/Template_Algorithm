@@ -117,7 +117,13 @@ vector<tuple<int, int, int>> generateRandomGraph(int n, int m, int MaxW)
 void generateTestCase()
 {
     ofstream Cout("input.txt");
-    00000
+
+    int k = Rand(1, 100);
+    int l = Rand(1, 1000);
+    int r = Rand(l, l + 1000);
+
+    Cout << k << " " << l << " " << r << "\n";
+
     Cout.close();
 }
 
@@ -134,7 +140,7 @@ int main()
 
         system("test.exe > output.txt 2>&1");
         system("test_trau.exe > output_trau.txt 2>&1");
-
+        
         if (system(("fc output.txt output_trau.txt")) != 0)
         {
             cout << "Test " << iTest << ": WRONG!\n";
