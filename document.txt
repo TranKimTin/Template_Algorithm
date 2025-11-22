@@ -153,3 +153,22 @@ bool intersect(pii a, pii b)
 
 cout << fixed << setprecision(3) << x << endl; 
 cout << setw(9) << setfill('0') << dp[2] << "\n";
+
+
+struct HCN {
+    int x1, y1, x2, y2;
+};
+
+// TRUE nếu hai hình có bất kỳ phần nào chung nhau (kể cả cạnh/góc)
+bool giao(const HCN& a, const HCN& b) {
+    // Nếu 1 hình nằm hoàn toàn bên trái hình kia
+    if (a.x2 < b.x1) return false;
+    if (a.x1 > b.x2) return false;
+
+    // Nếu 1 hình nằm hoàn toàn bên dưới hình kia
+    if (a.y2 < b.y1) return false;
+    if (a.y1 > b.y2) return false;
+
+    // Ngược lại là có giao (kể cả chạm)
+    return true;
+}
