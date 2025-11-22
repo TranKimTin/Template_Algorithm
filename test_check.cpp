@@ -32,6 +32,25 @@ vector<int> generateUniqueArray(int n)
     return a;
 }
 
+// random mảng n phần tử phân biệt, mỗi phần tử trong [1, maxN]
+vector<int> generateUniqueArray(int n, int maxN)
+{
+    vector<int> pool(maxN);
+    iota(pool.begin(), pool.end(), 1); // [1..maxN]
+
+    // xáo đều pool
+    for (int i = maxN - 1; i > 0; --i)
+    {
+        int j = Rand(0, i);
+        swap(pool[i], pool[j]);
+    }
+
+    // lấy n phần tử đầu
+    pool.resize(n);
+
+    return pool;
+}
+
 // Sinh mảng n phần tử không trùng, mỗi phần tử ∈ [1, Max]
 vector<ll> generateUniqueArray(int n, ll Max)
 {
@@ -86,6 +105,23 @@ vector<pair<int, int>> generateRandomTree(int n)
     return edges;
 }
 
+// Sinh cây ngẫu nhiên dạng parent array
+vector<int> generateRandomTreeParentArray(int n)
+{
+    vector<int> p(n + 1); // p[i] = parent của nút i, p[1] = 0 là root
+
+    for (int i = 2; i <= n; ++i)
+    {
+        // chọn ngẫu nhiên một parent từ 1 đến i-1
+        int parent = rd() % (i - 1) + 1;
+        p[i] = parent;
+    }
+
+    // lấy sub(1,n+1);
+
+    return p;
+}
+
 // Sinh đồ thị vô hướng ngẫu nhiên với n đỉnh, m cạnh, trọng số ∈ [1, MaxW]
 vector<tuple<int, int, int>> generateRandomGraph(int n, int m, int MaxW)
 {
@@ -118,11 +154,24 @@ void generateTestCase()
 {
     ofstream Cout("input.txt");
 
-    int k = Rand(1, 100);
-    int l = Rand(1, 1000);
-    int r = Rand(l, l + 1000);
+    int t = 1;
+    Cout << t << endl;
 
-    Cout << k << " " << l << " " << r << "\n";
+    int n = Rand(1, 100);
+    // n = 9;
+    Cout << n << endl;
+    for (int i = 0; i < n; i++)
+    {
+        char c = (char)(Rand('A', 'F'));
+        Cout << c;
+    }
+    Cout << endl;
+    auto list = generateRandomTreeParentArray(n);
+    for (int i = 1; i <= n; i++)
+    {
+        Cout << list[i] << " ";
+    }
+    Cout << endl;
 
     Cout.close();
 }
@@ -140,7 +189,7 @@ int main()
 
         system("test.exe > output.txt 2>&1");
         system("test_trau.exe > output_trau.txt 2>&1");
-        
+
         if (system(("fc output.txt output_trau.txt")) != 0)
         {
             cout << "Test " << iTest << ": WRONG!\n";
