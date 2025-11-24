@@ -291,7 +291,7 @@ private:
     int indexOf(AVLNode *root, int value)
     {
         if (!root)
-            return 0;
+            return 1;
         if (value == root->value)
         {
             return size(root->left) + 1;
@@ -324,7 +324,7 @@ public:
         return getByIndex(root, k)->value;
     }
 
-    int indexOf(int value) // đếm từ 1
+    int indexOf(int value) // đếm từ 1, trả về số thứ tự khi chèn value vào
     {
         return indexOf(root, value);
     }
