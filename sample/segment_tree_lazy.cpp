@@ -4,6 +4,7 @@
 #define MOD 10000007
 using namespace std;
 #define INF 99999999999999ll
+#define MAX 1000
 // lazy segment tree
 // đếm từ 0
 struct Node
@@ -37,9 +38,9 @@ class SegmentTree
     vector<bool> to_set;
 
 public:
-    SegmentTree(const vector<ll> &data)
+    SegmentTree(ll data[MAX], int N)
     {
-        n = data.size();
+        n = N;
         tree.resize(4 * n);
         lazy_add.assign(4 * n, 0);
         lazy_set.assign(4 * n, 0);
@@ -63,7 +64,7 @@ public:
     }
 
 private:
-    void build(int id, int l, int r, const vector<ll> &data)
+    void build(int id, int l, int r, ll data[MAX])
     {
         if (l == r)
         {
@@ -163,7 +164,7 @@ private:
         int mid = (l + r) / 2;
         Node left = query(id * 2, l, mid, L, R);
         Node right = query(id * 2 + 1, mid + 1, r, L, R);
-        
+
         Node result;
         result.merge(left, right);
         return result;
@@ -172,8 +173,9 @@ private:
 
 int main()
 {
-    vector<ll> a = {1, 2, 3, 4, 5, 6};
-    SegmentTree tree(a);
+    int n = 6;
+    ll a[] = {1, 2, 3, 4, 5, 6};
+    SegmentTree tree(a, 6);
 
     cout << tree.query_range(1, 5).minVal;
 

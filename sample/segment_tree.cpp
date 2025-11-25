@@ -3,6 +3,7 @@
 using namespace std;
 
 #define INF 9999999
+#define MAX 1000
 // segment tree max, min, sum
 // đếm từ 0
 struct Node
@@ -17,7 +18,7 @@ private:
     vector<Node> tree;
     int n;
 
-    void build(int id, int start, int end, const vector<ll> &arr)
+    void build(int id, int start, int end, ll arr[MAX])
     {
         if (start == end)
         {
@@ -108,9 +109,9 @@ private:
     }
 
 public:
-    SegmentTree(const vector<ll> &data)
+    SegmentTree(ll data[MAX], int N)
     {
-        n = data.size();
+        n = N;
         tree.resize(4 * n);
         build(0, 0, n - 1, data);
     }
@@ -133,8 +134,9 @@ public:
 
 int main()
 {
-    vector<ll> a = {1, 2, 3, 4, 5, 6};
-    SegmentTree tree(a);
+    int n = 6;
+    ll a[] = {1, 2, 3, 4, 5, 6};
+    SegmentTree tree(a, n);
 
     cout << tree.query(1, 5).sum;
 
