@@ -154,24 +154,15 @@ void generateTestCase()
 {
     ofstream Cout("input.txt");
 
-    int t = 1;
-    Cout << t << endl;
+    // ví dụ file input chứa mảng n số nguyên 1 <= a[i] <= n không trùng nhau
+    int n = Rand(10, 100);
+    vector<int> arr = generateUniqueArray(n);
 
-    int n = Rand(1, 100);
-    // n = 9;
     Cout << n << endl;
     for (int i = 0; i < n; i++)
     {
-        char c = (char)(Rand('A', 'F'));
-        Cout << c;
+        Cout << arr[i] << " ";
     }
-    Cout << endl;
-    auto list = generateRandomTreeParentArray(n);
-    for (int i = 1; i <= n; i++)
-    {
-        Cout << list[i] << " ";
-    }
-    Cout << endl;
 
     Cout.close();
 }
