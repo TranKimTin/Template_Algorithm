@@ -1,0 +1,271 @@
+lý thuyết: 
+https://roadmap.sh/r/vnoi-roadmap
+học các dạng độ khó 3 sao trở xuống
+
+
+
+bài tập codeforces: 
+https://codeforces.com/problemset?order=BY_SOLVED_DESC&tags=1700-2000
+làm từ trên xuống dưới (sắp xếp theo bài có nhiều người giải được nhất, độ khó 1700-2000)
+
+
+
+Knapsack dp:
+https://www.acmicpc.net/problem/30982
+
+Knapsack dp with binary splitting
+https://www.acmicpc.net/problem/12920
+
+DP + Game theory
+https://www.acmicpc.net/problem/31948
+
+DP Bitmask (saleman)
+https://www.acmicpc.net/problem/2098
+
+TSP + dijistra
+https://www.acmicpc.net/problem/23840
+
+
+dp + implementation
+https://codeforces.com/contest/2104/problem/E
+https://www.acmicpc.net/problem/1006
+https://www.acmicpc.net/problem/15678
+
+digit dp (trace)
+https://www.acmicpc.net/problem/1020
+
+dp thứ tự từ điển
+https://www.acmicpc.net/problem/1023
+
+range dp 
+https://www.acmicpc.net/problem/12013
+
+dp on tree:
+https://www.acmicpc.net/problem/1289
+https://www.acmicpc.net/problem/7812 (Rerooting DP)
+codejam 2025 final 2 bài D 
+codejam 2022 final 1 bài C 
+
+path on grids dp:
+https://www.acmicpc.net/problem/3114
+https://www.acmicpc.net/problem/14585
+https://www.acmicpc.net/problem/2618
+https://www.acmicpc.net/problem/2673
+https://www.acmicpc.net/problem/2315 ( gần giống bài 4 thi vòng loại 2025)
+https://www.acmicpc.net/problem/14517 (palindrome )
+
+dp +to hop
+https://www.acmicpc.net/problem/33696
+
+Implementation:
+https://www.acmicpc.net/problem/31856
+https://www.acmicpc.net/problem/2632
+https://www.acmicpc.net/problem/24505(fenwick)
+
+binary search: 
+https://www.acmicpc.net/problem/2539
+https://www.acmicpc.net/problem/27281
+https://www.acmicpc.net/problem/2465
+https://www.acmicpc.net/problem/14942 (tree, dfs)
+
+Binary search on value
+https://www.acmicpc.net/problem/32956
+https://www.acmicpc.net/problem/1637
+
+path on grids + binary search: 
+https://www.acmicpc.net/problem/20293
+
+sort + data structure: 
+https://www.acmicpc.net/problem/33071
+https://www.acmicpc.net/problem/10800
+
+LIS: 
+https://www.acmicpc.net/problem/7570
+https://www.acmicpc.net/problem/12013
+https://www.acmicpc.net/problem/31503
+https://www.acmicpc.net/problem/2532
+https://www.acmicpc.net/problem/23248
+https://www.acmicpc.net/problem/3045 ( linked list)
+
+Prefix sum, lập lịch: 
+https://www.acmicpc.net/problem/32634
+
+Prefix sum + data structure
+https://www.acmicpc.net/problem/19566
+
+graph:
+https://www.acmicpc.net/problem/24459
+
+Merge sort tree
+https://www.acmicpc.net/problem/13537
+https://www.acmicpc.net/problem/7469
+
+
+segment lazy support mul + sum
+https://www.acmicpc.net/problem/13925
+https://www.acmicpc.net/problem/15782 (segment tree lazy xor)
+https://www.acmicpc.net/problem/12895 (segment tree lazy or)
+
+
+segment tree
+https://www.acmicpc.net/problem/12858 (segment tree gcd)
+https://www.acmicpc.net/problem/9345 (segment tree non lazy xor)
+https://www.acmicpc.net/problem/22959 (segment tree min max, min_left, max_right)
+https://www.acmicpc.net/problem/20052 (segment tree min max)
+https://www.acmicpc.net/problem/20212 (segment tree sum with length)
+https://www.acmicpc.net/problem/2325 (segment tree update range min, query point)
+
+two pointers with stack support
+https://www.acmicpc.net/problem/8201
+https://www.acmicpc.net/problem/14572
+
+two pointers
+https://www.acmicpc.net/problem/2842
+https://www.acmicpc.net/problem/1981 (bfs)
+
+graph + dfs + binary search
+https://www.acmicpc.net/problem/33626
+
+graph + hld + lca
+https://www.acmicpc.net/problem/3176
+https://www.acmicpc.net/problem/1761
+https://www.acmicpc.net/problem/11438
+
+graph + scc + dfs
+https://www.acmicpc.net/problem/1108
+https://www.acmicpc.net/problem/4196
+https://www.acmicpc.net/problem/3044 
+https://www.acmicpc.net/problem/2150
+
+bfs
+https://www.acmicpc.net/problem/3197
+https://www.acmicpc.net/problem/16930
+https://www.acmicpc.net/problem/17071 (tính chẵn lẻ)
+https://www.acmicpc.net/problem/2536 (intersect check)
+https://www.acmicpc.net/problem/20304 (bfs bitmask)
+https://www.acmicpc.net/problem/8111 (bfs on modulo state)
+
+bfs01
+https://www.acmicpc.net/problem/9376
+
+graph + articulation point
+https://www.acmicpc.net/problem/11266
+
+graph + find bridge
+https://www.acmicpc.net/problem/11400
+
+graph + find cycle(next) + dp
+https://www.acmicpc.net/problem/10265
+
+DAG 
+https://www.acmicpc.net/problem/1948
+
+Dijkstra
+https://www.acmicpc.net/problem/5719
+
+sắp xếp topo
+https://www.acmicpc.net/problem/31633
+https://www.acmicpc.net/problem/2637
+
+
+dsu first left lesser, first right lesser, monotonic stack
+https://www.acmicpc.net/problem/2104
+https://www.acmicpc.net/problem/1989
+https://www.acmicpc.net/problem/3015 (monotonic stack)
+
+Isotonic Regression 
+https://www.acmicpc.net/problem/1209
+
+geo, polygon area, point to line dist
+https://www.acmicpc.net/problem/24601
+https://www.acmicpc.net/problem/13352
+
+geo convex hull
+https://www.acmicpc.net/problem/1708
+
+Lucas theorem
+https://www.acmicpc.net/problem/11402
+
+Lucas mở rộng + CRT
+https://www.acmicpc.net/problem/11439 (tính C(n,k) % m với m không phải là số nguyên tố)
+
+find shortest path with dp 
+https://www.acmicpc.net/problem/10217
+https://www.acmicpc.net/problem/13907
+
+string + z function
+https://www.acmicpc.net/problem/1305
+
+string + kmp
+https://www.acmicpc.net/problem/3111
+https://www.acmicpc.net/problem/1893
+
+string + suffix array lcp
+https://www.acmicpc.net/problem/1605
+
+https://www.acmicpc.net/problem/8895 (Bài toán tòa nhà (Skyscrapers) / Visible Permutations DP)
+https://www.acmicpc.net/problem/13806 (min path conver in DAG, max matching)
+https://www.acmicpc.net/problem/2402 (DSU có parity (xor))
+https://www.acmicpc.net/problem/6998 (check tree isomorphism)
+
+string + hash
+https://www.acmicpc.net/problem/19585 (trie nhanh hơn)
+https://www.acmicpc.net/problem/1786 (dùng kmp, z function đều giải được)
+
+string +manacher
+https://www.acmicpc.net/problem/16163
+
+string + trie
+https://www.acmicpc.net/problem/5670
+
+bruteforce + number theory
+https://atcoder.jp/contests/abc400/tasks/abc400_e
+
+bruteforce
+https://www.acmicpc.net/problem/13141
+https://www.acmicpc.net/problem/1090
+
+tổ hợp:
+https://www.acmicpc.net/problem/8907
+
+phương trình Diophantine
+https://www.acmicpc.net/problem/3955
+https://www.acmicpc.net/problem/1214
+
+math:
+https://www.acmicpc.net/problem/13430
+https://www.acmicpc.net/problem/19577
+
+Fenwick + offline query (persistence segment tree)
+https://www.acmicpc.net/problem/16978
+
+Prefix sum + Fenwick 2d
+https://www.acmicpc.net/problem/11658
+
+
+prefix sum + bit trie
+https://www.acmicpc.net/problem/13504
+
+difference array (fibo)
+https://www.acmicpc.net/problem/20305
+
+meet-in-the-middle
+https://www.acmicpc.net/problem/16287
+
+DSU
+https://www.acmicpc.net/problem/3830
+
+sorting
+https://www.acmicpc.net/problem/16496
+
+kadane + in-order dfs
+https://www.acmicpc.net/problem/18251
+
+dp với nhân ma trận: 
+https://www.acmicpc.net/problem/13976
+https://www.acmicpc.net/problem/17401
+https://www.acmicpc.net/problem/23819
+https://www.acmicpc.net/problem/1533
+https://www.acmicpc.net/problem/14440
+https://www.acmicpc.net/problem/11778 (FIBO)
+https://www.acmicpc.net/problem/11440 (FIBO)
